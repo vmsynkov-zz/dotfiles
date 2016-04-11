@@ -1,0 +1,35 @@
+"map n <C-f>
+"map p <C-b>
+"map I zi
+"map O zo
+
+set fullscreen = no
+
+" set width=800
+" set height=600
+
+set commandtimeout = 2000
+
+set defaultdir = $HOME/Documents
+
+set content = yes
+
+set continuous = yes
+
+set continuouspad = 2
+
+set autoscrollpage = yes
+
+set autoscrolldoc = yes
+
+set noinfo = yes
+
+set pdfcache = 4
+
+" set visualmode = yes
+
+set wrapscan = yes
+
+set doubleclick = word
+
+" set reverted = yes

@@ -1,0 +1,14 @@
+! rofi
+rofi.font: Hack 15
+rofi.width: 70
+rofi.lines: 3
+rofi.columns: 1
+rofi.opacity: 90
+rofi.hlfg: #212121
+rofi.bg: #1d2021
+rofi.fg: #fabd2f
+rofi.hlbg: #a89984
+rofi.bw: 0
+rofi.location: 2
+rofi.padding: 100
+rofi.fuzzy: false

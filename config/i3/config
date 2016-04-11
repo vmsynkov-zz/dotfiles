@@ -1,0 +1,210 @@
+# vim:filetype=i3
+
+# variables
+
+set $default_gaps_inner 5
+set $default_gaps_outer 5
+
+set $SCRIPTS $HOME/Config/scripts
+set $WALL $HOME/Config/wallpapers
+set $PAPER \
+stone.jpg
+
+set $mod Mod4
+
+set $mode_resize <span>  </span><span background='#fabd2f' foreground='#000000'> resize </span> [<span foreground='#ff0000'>h</span>]<span foreground='#ebdbb2'>   </span>[<span foreground='#ff0000'>l</span>]<span foreground='#ebdbb2'>   </span>[<span foreground='#ff0000'>j</span>]<span foreground='#ebdbb2'>   </span>[<span foreground='#ff0000'>k</span>]<span foreground='#ebdbb2'>   </span>
+
+set $ws1  "1:  "
+set $ws2  "2:  "
+set $ws3  "3:  "
+set $ws4  "4:  "
+set $ws5  "5:  "
+set $ws6  "6:  "
+set $ws7  "7:  "
+set $ws8  "8: "
+set $ws9  "9: "
+set $ws10 "10:  "
+
+# colors
+
+set $black       #212121
+set $darkblack   #000000
+set $red         #fb4934
+set $darkred     #cc241d
+set $green       #b8bb26
+set $darkgreen   #98971a
+set $yellow      #fabd2f
+set $darkyellow  #d79921
+set $blue        #83a598
+set $darkblue    #458588
+set $magenta     #d3869b
+set $darkmagenta #b16286
+set $cyan        #8ec07c
+set $darkcyan    #689d6a
+set $white       #ebdbb2
+set $darkwhite   #a89984
+set $background  #000000
+set $transparent #1d202100
+
+# startup
+exec --no-startup-id compton -b
+exec_always --no-startup-id feh --bg-fill $WALL/$PAPER
+
+# bindings
+bindcode $mod+33 exec --no-startup-id $SCRIPTS/layout_change.sh && pkill -RTMIN+4 i3blocks
+bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+bindcode $mod+40 exec --no-startup-id rofi -show run -auto-select
+bindsym $mod+backslash exec --no-startup-id oblogout 
+
+bindcode $mod+27 mode "$mode_resize"
+
+bindcode $mod+58 move scratchpad
+bindcode $mod+57 scratchpad show
+
+bindsym XF86AudioLowerVolume exec --no-startup-id $SCRIPTS/volume_control.sh lower
+bindsym XF86AudioRaiseVolume exec --no-startup-id $SCRIPTS/volume_control.sh increase
+bindsym XF86AudioMute exec --no-startup-id $SCRIPTS/volume_control.sh toggle
+
+bindcode $mod+43 focus left
+bindcode $mod+44 focus down
+bindcode $mod+45 focus up
+bindcode $mod+46 focus right
+
+bindcode $mod+55 split v
+bindcode $mod+56 split h
+
+bindcode $mod+41 fullscreen
+bindcode $mod+42 fullscreen global
+
+bindcode $mod+39 layout stacking
+bindcode $mod+25 layout tabbed
+bindcode $mod+26 layout toggle split
+
+bindsym $mod+space floating toggle
+bindsym $mod+Mod1+space focus mode_toggle
+
+bindcode $mod+38 focus parent
+bindcode $mod+Mod1+38 focus child
+
+bindcode $mod+Mod1+39 sticky toggle
+
+bindsym $mod+Tab workspace back_and_forth
+
+bindsym $mod+Mod1+c reload
+bindsym $mod+Mod1+r restart
+bindcode $mod+24 kill
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Mod1+1 move container to workspace number $ws1
+bindsym $mod+Mod1+2 move container to workspace number $ws2
+bindsym $mod+Mod1+3 move container to workspace number $ws3
+bindsym $mod+Mod1+4 move container to workspace number $ws4
+bindsym $mod+Mod1+5 move container to workspace number $ws5
+bindsym $mod+Mod1+6 move container to workspace number $ws6
+bindsym $mod+Mod1+7 move container to workspace number $ws7
+bindsym $mod+Mod1+8 move container to workspace number $ws8
+bindsym $mod+Mod1+9 move container to workspace number $ws9
+bindsym $mod+Mod1+0 move container to workspace number $ws10
+
+# modes
+
+mode --pango_markup "$mode_resize" {
+    bindcode 43 resize grow width 10 px or 1 ppt
+    bindcode 46 resize shrink width 10 px or 1 ppt
+
+    bindcode 45 resize grow height 10 px or 1 ppt
+    bindcode 44 resize shrink height 10 px or 1 ppt
+
+    bindcode 39 mode "default", exec --no-startup-id $SCRIPTS/slopsize.sh
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+#                       BORDER      BACKGROUND  TEXT   INDICATOR   CHILD_BORDER
+client.focused          $yellow     $yellow     $black $yellow     $yellow
+client.unfocused        $black      $black      $white $black      $darkyellow
+client.focused_inactive $black      $black      $white $black      $darkyellow
+client.urgent           $darkred    $darkred    $black $darkred    $darkred
+client.background       $black
+
+# options
+
+floating_modifier $mod
+
+font pango:Hack 12
+
+gaps inner $default_gaps_inner
+gaps outer $default_gaps_outer
+
+workspace $ws2 gaps inner 0
+workspace $ws2 gaps outer 0
+
+workspace_auto_back_and_forth yes
+
+force_display_urgency_hint 0 ms
+focus_on_window_activation urgent
+
+#floating_maximum_size 900 x 500
+floating_minimum_size -1 x -1
+floating_maximum_size -1 x -1
+
+new_window none
+
+# windows
+
+for_window [class="^.*"] border pixel 0
+
+assign [class="Firefox"] $ws2
+assign [class="(?i)chrome"] $ws5
+
+for_window [class="Oblogout"] fullscreen toggle 
+for_window [class="(?i)mpv"] floating enable
+for_window [class="(?i)feh"] floating enable
+for_window [class="(?i)knotes"] floating enable
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+
+for_window [instance="__scratchpad"] floating enable
+
+# bar
+
+bar {
+    status_command i3blocks 
+    i3bar_command i3bar -t 
+    position top
+    separator_symbol "  "
+    font pango:Hack 10
+    strip_workspace_numbers yes
+    tray_output primary
+    tray_padding 2 
+    height 25
+    colors {
+        statusline         $white
+        background         $transparent
+        separator          $darkwhite 
+
+	#                  BORDER       BACKGROUND   TEXT
+        focused_workspace  $transparent $transparent $yellow
+        inactive_workspace $transparent $transparent $white
+        active_workspace   $transparent $transparent $white
+        urgent_workspace   $darkred     $darkred     $transparent
+        binding_mode       $transparent $transparent $yellow
+    }
+}

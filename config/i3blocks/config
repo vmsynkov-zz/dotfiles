@@ -1,0 +1,29 @@
+[volume]
+label= 
+command=$HOME/Config/scripts/volume_status.sh
+interval=once
+markup=pango
+signal=1
+
+[updates]
+command=$HOME/Config/scripts/updates.sh
+interval=60
+signal=2
+urgent=true
+
+#[ncmcpp]
+#label=  
+#command=ncmpcpp --current-song | grep -E -o '\w*\s-\s\w*'
+#interval=1
+
+[key]
+label=  
+command=$HOME/Config/scripts/layout_status.sh
+interval=once
+signal=4
+
+[time]
+label= 
+command=echo "`date +'%a %d %b'`   `date +'%I:%M %p' `"
+interval=5
+markup=pango
