@@ -5,8 +5,8 @@
 set $default_gaps_inner 5
 set $default_gaps_outer 5
 
-set $SCRIPTS $HOME/Config/scripts
-set $WALL $HOME/Config/wallpapers
+set $SCRIPTS $HOME/src/scripts
+set $WALL $HOME/.config/wallpapers
 set $PAPER \
 stone.jpg
 
