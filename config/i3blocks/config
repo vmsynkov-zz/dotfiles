@@ -1,12 +1,12 @@
 [volume]
 label= 
-command=$HOME/Config/scripts/volume_status.sh
+command=$SCRIPTS_FOLDER/volume_status.sh
 interval=once
 markup=pango
 signal=1
 
 [updates]
-command=$HOME/Config/scripts/updates.sh
+command=$SCRIPTS_FOLDER/updates.sh
 interval=60
 signal=2
 urgent=true
@@ -18,7 +18,7 @@ urgent=true
 
 [key]
 label=  
-command=$HOME/Config/scripts/layout_status.sh
+command=$SCRIPTS_FOLDER/layout_status.sh
 interval=once
 signal=4
 

@@ -1,39 +1,41 @@
-alias tnrc='transmission-remote-cli'
-alias tnra='transmission-remote -a'
+alias trc='transmission-remote-cli'
+alias tra='transmission-remote -a '
 
-alias vim='nvim'
+alias cu='checkupdates'
 
-alias zshrc='nvim $HOME/.zshrc'
-alias i3c='nvim $HOME/.config/i3/config'
-alias i3b='nvim $HOME/.config/i3blocks/config'
-alias tec='nvim $HOME/.config/termite/config'
-alias gt3c='nvim $HOME/.config/gtk-3.0/settings.ini'
-alias gt2c='nvim $HOME/.gtkrc-2.0'
-alias xinc='nvim $HOME/.xinitrc'
-alias xrec='nvim $HOME/.Xresources'
-alias vimc='nvim $HOME/.vimrc'
-alias tmuc='nvim $HOME/.tmux.conf'
-alias npmc='nvim $HOME/.npmrc'
-alias vifc='nvim $HOME/.config/vifm/vifmrc'
-alias cmuc='nvim $HOME/.config/cmus/rc'
-alias alic='nvim $HOME/.oh-my-zsh/custom/aliases.zsh'
-alias powc='nvim $HOME/.oh-my-zsh/custom/powerlevel.zsh'
+alias xpac='expac -H M "%011m\t%-20n\t%10d" $(comm -23 <(pacman -Qqen | sort) <(pacman -Qqg base base-devel | sort)) | sort -n'
 
-alias yout='mpsyt'
+alias zshrc='vim $HOME/.config/zsh/.zshrc'
+alias i3c='vim $HOME/.config/i3/config'
+alias i3b='vim $HOME/.config/i3blocks/config'
+alias tec='vim $HOME/.config/termite/config'
+alias gt3c='vim $HOME/.config/gtk-3.0/settings.ini'
+alias gt2c='vim $HOME/.gtkrc-2.0'
+alias xinc='vim $HOME/.xinitrc'
+alias xrec='vim $HOME/.Xresources'
+alias vimc='vim $HOME/.vimrc'
+alias tmuc='vim $HOME/.tmux.conf'
+alias npmc='vim $HOME/.npmrc'
+alias vifc='vim $HOME/.config/vifm/vifmrc'
+alias cmuc='vim $HOME/.config/cmus/rc'
+alias alic='vim $HOME/.oh-my-zsh/custom/aliases.zsh'
+alias powc='vim $HOME/.oh-my-zsh/custom/powerlevel.zsh'
+
+alias yt='mpsyt'
 
 alias c='clear'
 alias e='exit'
 
-alias so='source '
-alias soa='source $HOME/.oh-my-zsh/custom/aliases.zsh'
-alias soz='source $HOME/.zshrc'
+alias s='source '
+alias sa='source $HOME/.oh-my-zsh/custom/aliases.zsh'
+alias sz='source $HOME/.zshrc'
 
-alias home='cd $HOME'
-alias down='cd $HOME/Downloads'
-alias docs='cd $HOME/Documents'
-alias musc='cd $HOME/Music'
-alias vids='cd $HOME/Videos'
-alias proj='cd $HOME/Projects'
+alias h='cd $HOME'
+alias load='cd $HOME/load'
+alias doc='cd $HOME/doc'
+alias mus='cd $HOME/muse'
+alias vid='cd $HOME/vid'
+alias src='cd $HOME/src'
 
 alias lsa='ls --almost-all'
 alias lx='ls -lXB' #  Sort by extension.
@@ -44,3 +46,6 @@ alias lu='ls -ltur' #  Sort by/show access time,most recent last.
 alias lsd="ls -lv --group-directories-first"
 
 alias feh="feh -g 900x500 --zoom max -x -d -B black"
+alias ncmpcpp="ncmpcpp -c "$XDG_CONFIG_HOME"/ncmpcpp/config"
+alias tmux="tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf"
+alias apvlv="apvlv -c "$XDG_CONFIG_HOME"/apvlv/apvlvrc"

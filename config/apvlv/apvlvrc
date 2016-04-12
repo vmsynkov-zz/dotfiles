@@ -1,16 +1,23 @@
+" map n to <C-f> to goto next page
 "map n <C-f>
+
+" and p to prepage
 "map p <C-b>
+
+" map I to zi, and O to zo
 "map I zi
 "map O zo
 
 set fullscreen = no
 
-" set width=800
-" set height=600
+set zoom = fitwidth
+
+set width = 800
+set height = 600
 
 set commandtimeout = 2000
 
-set defaultdir = $HOME/Documents
+set defaultdir = $HOME/doc/books
 
 set content = yes
 
@@ -26,10 +33,12 @@ set noinfo = yes
 
 set pdfcache = 4
 
-" set visualmode = yes
+set visualmode = no
 
 set wrapscan = yes
 
 set doubleclick = word
 
-" set reverted = yes
+" set autoreload = 3
+
+" set reverted = no
