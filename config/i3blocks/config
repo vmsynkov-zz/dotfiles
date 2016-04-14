@@ -9,7 +9,13 @@ signal=1
 command=$SCRIPTS_FOLDER/updates.sh
 interval=60
 signal=2
-urgent=true
+urgent=false
+
+[canto]
+command=$SCRIPTS_FOLDER/rss_status.sh
+interval=60
+signal=3
+urgent=false
 
 #[ncmcpp]
 #label=  
@@ -23,7 +29,7 @@ interval=once
 signal=4
 
 [time]
-label= 
-command=echo "`date +'%a %d %b'`   `date +'%I:%M %p' `"
+#label= 
+command=echo "`date +'%a %d %b'`   `date +'%I:%M %p' `  "
 interval=5
 markup=pango

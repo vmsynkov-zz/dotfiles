@@ -1,0 +1,139 @@
+# Base-devel --ignore
+cryptsetup
+licences
+jfsutil
+logrotate
+lvm2
+mdadm
+pcmciautils
+reiserfsprogs
+s-nail
+xfsprogs
+nano
+vi
+??systemd-sysvcompate
+
+# Base --ignore
+patch
+
+# Mail
+trojita
+
+#?? RSS
+rssguard
+quiterss
+
+# Screenshot
+maim
+#\
+slop
+xdotool
+
+#?? Cron
+cronie
+
+#?? Other
+wget
+udiskie
+
+#File Manager 
+nautilus
+vifm
+
+#?? Notifications
+dunst
+
+#?? Editor
+vim
+neovim
+
+# BootLoader
+grub2
+
+# Wi-Fi
+wpa_supplicant
+
+# Sound
+alsa-utils
+
+# PopupSwitcher
+rofi
+
+# LogoutScreen
+oblogout
+
+# Compositor
+compton
+
+# PDF
+apvlv
+
+# SSH
+openssh 
+
+# Drivers
+x86-video-intel
+x86-video-ati
+x86-input-synaptics #laptop
+
+# Eye-candy
+numix-themes
+
+# Xorg 
+xorg-server
+xorg-xinit
+xorg-utils(xev, xprop)
+xorg-server-utils(xrandr, xrdb, xmodmap, xbacklight)
+#i3 dependensies \
+#look here if smth goes wrong
+#xcb-util-keysyms
+#xcb-util-cursor
+#xcb-util-renderutil
+#xcb-util-image
+#libxkbcommon-x11
+#libxkbcommon
+#xcb-util-vm
+#libxcb
+#libev
+
+# Images
+feh
+
+# Terminal
+termite
+tmux
+
+# Zip
+zip + unzip
+
+# Shell
+zsh
+zsh-completions
+zsh-syntax-highlighting
+#zsh-lovers 
+
+# Torrent
+transmission-cli
+transmission-remote
+
+# Window Manager
+i3-gaps
+
+# Status Bar
+i3blocks
+
+# Fonts
+Font-Awesome
+Hack
+
+# Music Player
+mpd
+ncmpcpp 
+
+# Video Player
+mpv
+
+# Programming
+git
+npm
+nodejs

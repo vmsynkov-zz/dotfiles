@@ -1,5 +1,7 @@
 # vim:filetype=i3
 
+bindsym $mod+z exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
+
 # variables
 
 set $default_gaps_inner 5
@@ -165,13 +167,15 @@ new_window none
 
 for_window [class="^.*"] border pixel 0
 
+for_window [title="mpsyt"] floating enable
+
 assign [class="Firefox"] $ws2
 assign [class="(?i)chrome"] $ws5
 
 for_window [class="Oblogout"] fullscreen toggle 
 for_window [class="(?i)mpv"] floating enable
 for_window [class="(?i)feh"] floating enable
-for_window [class="(?i)knotes"] floating enable
+for_window [class="trojita"] floating enable
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="bubble"] floating enable
@@ -193,7 +197,7 @@ bar {
     font pango:Hack 10
     strip_workspace_numbers yes
     tray_output primary
-    tray_padding 2 
+    tray_padding 0 
     height 25
     colors {
         statusline         $white

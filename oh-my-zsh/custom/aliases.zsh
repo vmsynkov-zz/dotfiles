@@ -46,6 +46,5 @@ alias lu='ls -ltur' #  Sort by/show access time,most recent last.
 alias lsd="ls -lv --group-directories-first"
 
 alias feh="feh -g 900x500 --zoom max -x -d -B black"
-alias ncmpcpp="ncmpcpp -c "$XDG_CONFIG_HOME"/ncmpcpp/config"
 alias tmux="tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf"
 alias apvlv="apvlv -c "$XDG_CONFIG_HOME"/apvlv/apvlvrc"
