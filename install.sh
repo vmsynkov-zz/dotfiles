@@ -9,8 +9,11 @@ FONT_FOLDER=$HOME/.local/share/fonts
 CONFIG_FOLDER=$HOME/.config
 
 echo [I] linking XDG_CONFIG_DIRECTORY
-for folder in $(ls --almost-all config)
+for folder in $(ls --almost-all config --ignore oh-my-zsh)
 do 
+#if [ ! -d folder ]; then
+#mkdir -p $CONFIG_FOLDER/$folder
+#fi
 
 for file in $(ls --almost-all config/$folder)
 do
