@@ -5,8 +5,8 @@
 set $default_gaps_inner 5
 set $default_gaps_outer 5
 
-set $SCRIPTS $HOME/Config/scripts
-set $WALL $HOME/Config/wallpapers
+set $SCRIPTS $HOME/scripts
+set $WALL $HOME/.config/wallpapers
 set $PAPER \
 stone.jpg
 
@@ -48,7 +48,7 @@ set $transparent #1d202100
 
 # startup
 exec --no-startup-id compton -b
-exec_always --no-startup-id feh --bg-fill $WALL/$PAPER
+exec_always --no-startup-id feh --no-fehbg --bg-fill $WALL/$PAPER
 
 # bindings
 bindcode $mod+33 exec --no-startup-id $SCRIPTS/layout_change.sh && pkill -RTMIN+4 i3blocks
