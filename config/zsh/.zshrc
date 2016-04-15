@@ -1,4 +1,5 @@
-export ZSH=/home/cli3mo/.oh-my-zsh
+export ZSH=/home/cli3mo/.config/oh-my-zsh
+
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.local/bin/:$HOME/.npm-global"
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache

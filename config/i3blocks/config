@@ -1,21 +1,22 @@
+markup=pango
+
 [volume]
 label= 
 command=$SCRIPTS_FOLDER/volume_status.sh
 interval=once
-markup=pango
 signal=1
 
 [updates]
-command=$SCRIPTS_FOLDER/updates.sh
-interval=60
+command=echo " $ $(checkupdates | wc -l) "
+interval=once
 signal=2
-urgent=false
+urgent=true
 
 [canto]
-command=$SCRIPTS_FOLDER/rss_status.sh
-interval=60
+command=echo " $ $(canto-remote status) "
+interval=once
 signal=3
-urgent=false
+urgent=true
 
 #[ncmcpp]
 #label=  
@@ -23,13 +24,10 @@ urgent=false
 #interval=1
 
 [key]
-label=  
-command=$SCRIPTS_FOLDER/layout_status.sh
+command=echo "   $(setxkbmap -query | grep 'layout' | tail -c 3 | awk '{ print toupper($0) }') "
 interval=once
 signal=4
 
 [time]
-#label= 
-command=echo "`date +'%a %d %b'`   `date +'%I:%M %p' `  "
+command=echo " `date +'%I:%M %p'` "
 interval=5
-markup=pango

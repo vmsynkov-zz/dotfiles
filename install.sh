@@ -1,47 +1,44 @@
-#################################################
-## @TODO
-## x deal with ln with existing folders problem
-## x add installer for needed packages
-#################################################
-
 GIT_LOCATION=$PWD
 FONT_FOLDER=$HOME/.local/share/fonts
 CONFIG_FOLDER=$HOME/.config
+OHMYZSH=$HOME/.config/oh-my-zsh
 
 echo [I] linking XDG_CONFIG_DIRECTORY
-for folder in $(ls --almost-all config --ignore oh-my-zsh)
-do 
-#if [ ! -d folder ]; then
-#mkdir -p $CONFIG_FOLDER/$folder
-#fi
+mkdir -p $CONFIG_FOLDER
 
-for file in $(ls --almost-all config/$folder)
-do
-ln -sf $GIT_LOCATION/config/$folder/$file $CONFIG_FOLDER/$folder/$file
+#assuming oh-my-zsh is installed by the prior script
+for entry in $(ls --almost-all config/oh-my-zsh/custom)
+do 
+rm -f $OHMYZSH/custom/$entry
+ln -s $GIT_LOCATION/config/oh-my-zsh/custom/$entry $OHMYZSH/custom/$entry
 done
 
+rm -rf $CONFIG_FOLDER/wallpapers
+ln -s $GIT_LOCATION/config/wallpapers $CONFIG_FOLDER/wallpapers
+
+for entry in $(ls --almost-all config --ignore oh-my-zsh --ignore wallpapers --ignore nvim); do 
+if [ -d config/$entry ]; then
+mkdir -p $CONFIG_FOLDER/$entry
+for file in $(ls --almost-all config/$entry); do
+rm -f $CONFIG_FOLDER/$entry/$file
+ln -s $GIT_LOCATION/config/$entry/$file $CONFIG_FOLDER/$entry/$file
+done
+
+else
+rm -f $CONFIG_FOLDER/$entry
+ln -s $GIT_LOCATION/config/$entry $CONFIG_FOLDER/$entry
+fi
 done
 
 echo [II] moving fonts
+mkdir -p $FONT_FOLDER
 for font in $(ls --almost-all fonts)
 do
+if [ ! -a $FONT_FOLDER/$font ]; then
 install -m 0644 -p -t $FONT_FOLDER fonts/$font
+fi
 done
 
-echo [III] linking oh-my-zsh customs
-for entry in $(ls --almost-all oh-my-zsh/custom)
-do 
-ln -sf $GIT_LOCATION/oh-my-zsh/custom/$entry $ZSH/custom/$entry
-done
-
-echo [IV] linking root level dotfiles
-for file in $(ls --almost-all root)
-do
-ln -sf $GIT_LOCATION/root/$file $HOME/$file
-done
-
-echo [V] linking scripts
-ln -sf $GIT_LOCATION/scripts $HOME/scripts
-
-echo [VI] linking wallpapers
-ln -sf $GIT_LOCATION/wallpapers $HOME/wallpapers
+echo [III] linking scripts
+rm -f $HOME/src/scripts
+ln -s $GIT_LOCATION/scripts $HOME/src/scripts
