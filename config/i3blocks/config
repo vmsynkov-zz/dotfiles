@@ -1,22 +1,39 @@
+separator=false
+separator_block_width=5
+border_top=0
+border_left=0
+border_right=0
+border_bottom=4
 markup=pango
 
+[updates]
+command=$SCRIPTS_FOLDER/updates_fancy.sh
+interval=once
+signal=2
+border=#cc241d
+
+[canto]
+command=echo "    $(canto-remote status) "
+interval=once
+signal=3
+border=#ec5e00
+
+[wifi]
+command=$SCRIPTS_FOLDER/wifi_status.sh
+interval=10
+border=#d79921
+
+[battery]
+command=$SCRIPTS_FOLDER/battery_status.sh
+interval=10
+border=#27ae60
+
 [volume]
-label= 
+label=   
 command=$SCRIPTS_FOLDER/volume_status.sh
 interval=once
 signal=1
-
-[updates]
-command=echo " $ $(checkupdates | wc -l) "
-interval=once
-signal=2
-urgent=true
-
-[canto]
-command=echo " $ $(canto-remote status) "
-interval=once
-signal=3
-urgent=true
+border=#3498db
 
 #[ncmcpp]
 #label=  
@@ -27,7 +44,9 @@ urgent=true
 command=echo "   $(setxkbmap -query | grep 'layout' | tail -c 3 | awk '{ print toupper($0) }') "
 interval=once
 signal=4
+border=#2980b9
 
 [time]
 command=echo " `date +'%I:%M %p'` "
 interval=5
+border=#9b59b6
