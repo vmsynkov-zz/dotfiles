@@ -1,5 +1,5 @@
 [global]
-    font = Hack 10
+    font = Hack 16
     allow_markup = yes
     
     #   %a  appname
@@ -28,7 +28,7 @@
     # the top and down respectevly.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-0+0"
+    geometry = "300x5+810+0"
     
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -47,10 +47,10 @@
     horizontal_padding = 10
     separator_color = frame
     startup_notification = false
-    dmenu = /usr/bin/dmenu -p dunst:
+    dmenu = /usr/bin/rofi -dmenu -p dunst:
     browser = /usr/bin/firefox -new-tab
-    icon_position = off
-    icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    icon_position = left
+    icon_folders = /usr/share/icons
 
 [frame]
     width = 0 
@@ -71,8 +71,8 @@
     timeout = 10
 
 [urgency_normal]
-    background = "#fabd2f"
-    foreground = "#ffffff"
+    background = "#2c3e50"
+    foreground = "#ecf0f1"
     timeout = 10
 
 [urgency_critical]

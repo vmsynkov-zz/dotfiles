@@ -1,14 +1,15 @@
 " execute pathogen#infect()
-set backspace=indent,eol,start
+
+"set backspace=indent,eol,start
 syntax on
-filetype plugin indent on
+" filetype plugin indent on
 set number
 set hidden
-set nocompatible
+" set nocompatible
 set showtabline=2
 set noshowmode
 set t_Co=256
-set laststatus=2
+" set laststatus=2
 
 " let g:powerline_pycmd='py3'
 " set rtp+=$HOME/.local/lib/python3.5/site-packages/powerline/bindings/vim/

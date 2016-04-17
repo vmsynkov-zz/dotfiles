@@ -2,6 +2,4 @@
 
 UPDATES=$(checkupdates | wc -l)
 [[ "${UPDATES}" = "0" ]] && exit 0
-
-echo "   ${UPDATES} "
-exit 0
+pkill -RTMIN+2 i3blocks

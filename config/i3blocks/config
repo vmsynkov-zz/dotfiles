@@ -1,29 +1,46 @@
-[volume]
-label= 
-command=$HOME/Config/scripts/volume_status.sh
-interval=once
+separator=false
+separator_block_width=5
+border_top=0
+border_left=0
+border_right=0
+border_bottom=4
 markup=pango
-signal=1
 
 [updates]
-command=$HOME/Config/scripts/updates.sh
-interval=60
+command=$SCRIPTS_FOLDER/updates_fancy.sh
+interval=once
 signal=2
-urgent=true
+border=#cc241d
 
-#[ncmcpp]
-#label=  
-#command=ncmpcpp --current-song | grep -E -o '\w*\s-\s\w*'
-#interval=1
+[canto]
+command=echo "    $(canto-remote status) "
+interval=once
+signal=3
+border=#ec5e00
+
+[ncmcpp]
+label=    
+command=$SCRIPTS_FOLDER/ncmpcpp_status.sh
+interval=3
+signal=5
+border=#d79921
+
+#border=#27ae60
+
+[volume]
+label=    
+command=$SCRIPTS_FOLDER/volume_status.sh
+interval=once
+signal=1
+border=#3498db
 
 [key]
-label=  
-command=$HOME/Config/scripts/layout_status.sh
+command=echo "     $(setxkbmap -query | grep 'layout' | tail -c 3 | awk '{ print toupper($0) }') "
 interval=once
 signal=4
+border=#2980b9
 
 [time]
-label= 
-command=echo "`date +'%a %d %b'`   `date +'%I:%M %p' `"
+command=echo " `date +'%I:%M %p'` "
 interval=5
-markup=pango
+border=#9b59b6

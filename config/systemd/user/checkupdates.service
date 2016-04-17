@@ -1,0 +1,8 @@
+[Unit]
+Description=check arch repository for updates
+RefuseManualStart=no
+RefuseManualStop=yes
+ 
+[Service]
+Type=oneshot
+ExecStart=/home/cli3mo/src/scripts/updates_check.sh

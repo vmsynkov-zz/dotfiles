@@ -1,0 +1,9 @@
+[Unit]
+Description=check arch repository for updates
+
+[Timer]
+OnBootSec=1h
+OnUnitActiveSec=1h 
+
+[Install]
+WantedBy=timers.target

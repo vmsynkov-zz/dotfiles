@@ -1,0 +1,8 @@
+[Unit]
+Description=fetch new articles from feeds
+RefuseManualStart=no
+RefuseManualStop=yes
+ 
+[Service]
+Type=oneshot
+ExecStart=/home/cli3mo/src/scripts/rss_fetch.sh
