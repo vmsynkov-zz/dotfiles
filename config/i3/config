@@ -166,7 +166,7 @@ new_window none
 for_window [class="^.*"] border pixel 0
 
 assign [class="Firefox"] $ws2
-assign [class="(?i)chrome"] $ws5
+assign [class="(?i)chromium"] $ws2
 
 for_window [class="Oblogout"] fullscreen toggle 
 for_window [class="(?i)mpv"] floating enable

@@ -12,6 +12,7 @@ xrdb -load ~/.config/xorg/xresources
 setxkbmap -option terminate:ctrl_alt_bksp
 setxkbmap -option caps:swapescape
 setxkbmap -option ctrl:swap_lalt_lctl
+xmodmap -e "keycode 135 = Super_L"
 
 dunst &
 canto-daemon &

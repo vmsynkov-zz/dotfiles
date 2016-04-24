@@ -68,6 +68,7 @@ python \
 xdg-user-dirs \
 expac \
 trojita \
+libnotify \
 xorg-xrdb"
 
 AURPACKAGES="\
@@ -212,6 +213,10 @@ fc-cache -f $FONT_FOLDER
 printf "Linking scripts\n"
 rm -f $HOME/src/scripts
 ln -s $GIT_LOCATION/scripts $HOME/src/scripts
+
+printf "Installing zshenv and oblogout.conf"
+install -m 0644 -p -t /etc $GIT_LOCATION/oblogout.conf
+install -m 0644 -p -t /etc/zsh $GIT_LOCATION/zshenv
 
 printf "Configuring vim\n"
 [[ ! -d $HOME/.vim ]] && mkdir -p $HOME/.vim

@@ -25,7 +25,11 @@ interval=3
 signal=5
 border=#d79921
 
-#border=#27ae60
+[ram]
+label=    
+command=$SCRIPTS_FOLDER/memory_status.sh
+interval=5
+border=#27ae60
 
 [volume]
 label=    
