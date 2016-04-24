@@ -209,6 +209,10 @@ printf "Linking scripts\n"
 printf "Installing /etc and /root specific files"
 install -m 0644 -p -t /etc $REPO_DIR/oblogout.conf
 install -m 0644 -p -t /etc/zsh $REPO_DIR/zshenv
+sudo mkdir -p /root/.config /root/.local/share/zsh
+[[ ! -a /root/.config/zsh ]] && sudo ln -s $REPO_DIR/config/zsh /root/.config/zsh
+[[ ! -a /root/.config/nvim ]] && sudo ln -s $REPO_DIR/config/nvim /root/.config/nvim
+
 
 printf "Cleaning up\n"
 rm -rf $TMP_DIR $HOME/.viminfo $HOME/.bash*
@@ -217,3 +221,4 @@ printf "Some routines\n"
 xdg-user-dirs-update
 fc-cache -f $FONT_DIR
 chsh -s /bin/zsh cli3mo
+chsh -s /bin/zsh root
