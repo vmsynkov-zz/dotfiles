@@ -1,6 +1,6 @@
 export ZSH=$HOME/.config/oh-my-zsh
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.local/bin/:$HOME/.local/npm-global/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.local/bin/:$HOME/.local/npm/bin"
 export TERM="xterm-256color"
 export EDITOR="nvim"
 export ARCHFLAGS="-arch x86_64"
@@ -16,8 +16,6 @@ export GTK2_RC_FILES=$XDG_CONFIG_HOME/gtk-2.0/gtkrc
 export TMUX_TMPDIR=$XDG_RUNTIME_DIR/tmux
 export npm_config_userconfig=$XDG_CONFIG_HOME/npm/npmrc
 export LESSHISTFILE=/dev/null
-export GNUPGHOME=$XDG_DATA_HOME/gnupg
-export SSH_KEY_PATH=$XDG_DATA_HOME/ssh/id_rsa
 
 plugins=(sudo archlinux extract)
 
@@ -41,6 +39,8 @@ function ns {
   touch $1 && chmod u+x $1 && $EDITOR $1
 }
 
+source $XDG_CONFIG_HOME/zsh/aliases.zsh
+source $XDG_CONFIG_HOME/zsh/powerlevel.zsh
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 

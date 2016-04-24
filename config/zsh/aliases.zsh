@@ -20,13 +20,13 @@ alias npc='$EDITOR $XDG_CONFIG_HOME/npm/npmrc'
 alias vfc='$EDITOR $XDG_CONFIG_HOME/vifm/vifmrc'
 alias nvc='$EDITOR $XDG_CONFIG_HOME/nvim/init.vim'
 
-alias alc='$EDITOR $XDG_CONFIG_HOME/oh-my-zsh/custom/aliases.zsh'
-alias poc='$EDITOR $XDG_CONFIG_HOME/oh-my-zsh/custom/powerlevel.zsh'
+alias alc='$EDITOR $XDG_CONFIG_HOME/zsh/aliases.zsh'
+alias poc='$EDITOR $XDG_CONFIG_HOME/zsh/powerlevel.zsh'
 
 alias yt='mpsyt'
 
 alias s='source'
-alias sa='source $XDG_CONFIG_HOME/oh-my-zsh/custom/aliases.zsh'
+alias sa='source $XDG_CONFIG_HOME/zsh/aliases.zsh'
 alias sz='source $XDG_CONFIG_HOME/zsh/.zshrc'
 
 alias h='cd $HOME'
