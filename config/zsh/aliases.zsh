@@ -1,3 +1,9 @@
+alias -g hl='--help | less' 
+alias -g le='| less' 
+
+alias pacin="sudo pacman -S --needed"
+alias pacinse="sudo pacman -S --asexplicit"
+
 alias tnrc='transmission-remote-cli'
 alias tnra='transmission-remote -a'
 

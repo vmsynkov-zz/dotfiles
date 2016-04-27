@@ -59,7 +59,8 @@ bindsym $mod+backslash exec --no-startup-id oblogout
 bindcode $mod+27 mode "$mode_resize"
 
 bindcode $mod+58 move scratchpad
-bindcode $mod+57 scratchpad show
+bindcode $mod+57 scratchpad show, resize set 1880 1025, move position 20 40
+
 
 bindsym XF86AudioLowerVolume exec --no-startup-id $SCRIPTS/volume_control.sh lower
 bindsym XF86AudioRaiseVolume exec --no-startup-id $SCRIPTS/volume_control.sh increase
@@ -171,7 +172,6 @@ assign [class="(?i)chromium"] $ws2
 for_window [class="Oblogout"] fullscreen toggle 
 for_window [class="(?i)mpv"] floating enable
 for_window [class="(?i)feh"] floating enable
-for_window [class="(?i)knotes"] floating enable
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="bubble"] floating enable
@@ -180,10 +180,6 @@ for_window [window_role="Preferences"] floating enable
 
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
-
-for_window [instance="__scratchpad"] floating enable
-
-# bar
 
 bar {
     status_command i3blocks 

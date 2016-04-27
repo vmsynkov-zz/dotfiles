@@ -1,7 +1,7 @@
 #!/bin/bash
 
 UPDATES_DUMP=$(checkupdates)
-UPDATES_NUM=$(echo "$UPDATES_DUMP" | wc -l)
+[[ -n "$UPDATES_DUMP" ]] && UPDATES_NUM=$(echo "$UPDATES_DUMP" | wc -l) || UPDATES_NUM=0
 
 if [ "$BLOCK_BUTTON" = "1" ]; then
 
