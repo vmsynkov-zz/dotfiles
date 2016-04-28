@@ -154,3 +154,5 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_server_use_vim_stdout = 0
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
+
+let g:tern_map_keys=1

@@ -194,7 +194,7 @@ bar {
         background         $transparent
         separator          $darkwhite 
 
-	#                  BORDER       BACKGROUND   TEXT
+      	#                  BORDER       BACKGROUND   TEXT
         focused_workspace  $transparent $transparent $yellow
         inactive_workspace $transparent $transparent $white
         active_workspace   $transparent $transparent $white
