@@ -40,6 +40,7 @@ nodejs \
 npm \
 python-neovim-git \
 python2-neovim-git \
+cmake \
 xorg-xrdb"
 
 AURPACKAGES="\
@@ -48,6 +49,7 @@ i3blocks-gaps-git \
 canto-curses \
 canto-daemon \
 gtk-theme-arc \
+python-powerline-git \
 numix-circle-icon-theme-git"
 
 TMP_DIR=$HOME/tmp

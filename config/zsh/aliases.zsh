@@ -1,3 +1,9 @@
+alias -g hl='--help | less' 
+alias -g le='| less' 
+
+alias pacin="sudo pacman -S --needed"
+alias pacinse="sudo pacman -S --asexplicit"
+
 alias tnrc='transmission-remote-cli'
 alias tnra='transmission-remote -a'
 
@@ -48,3 +54,4 @@ alias feh="feh -g 1800x950 --zoom max -x -d -B black"
 alias tmux="tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf"
 alias apvlv="apvlv -c "$XDG_CONFIG_HOME"/apvlv/apvlvrc"
 alias v='nvim'
+alias vim='nvim'
