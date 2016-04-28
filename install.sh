@@ -232,6 +232,11 @@ step "Changing shell"
 sudo chsh -s /bin/zsh cli3mo &> /dev/null
 sudo chsh -s /bin/zsh root &> /dev/null
 
+step "Changing dotfiles remote to ssh"
+pushd $REPO_DIR &> /dev/null
+git remote set-url origin git@github.com:vmsynkov/dotfiles
+popd &> /dev/null
+
 [[ "$1" = "vbox" ]] && step "Enabling vboxservice" && sudo systemctl enable vboxservice &> /dev/null
 
 reboot
