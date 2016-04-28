@@ -1,7 +1,6 @@
 export ZSH=$HOME/.config/oh-my-zsh
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.local/bin/:$HOME/.local/npm/bin"
-#export TERM="xterm-256color"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.local/bin/:$HOME/.local/share/npm/bin"
 env | grep -o 'TMUX=' &> /dev/null && export TERM='screen-256color' || export TERM='xterm-256color'
 export EDITOR="nvim"
 export ARCHFLAGS="-arch x86_64"

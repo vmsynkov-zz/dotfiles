@@ -219,8 +219,8 @@ step "Linking zshrc for root"
 sudo mkdir -p /root/.config /root/.local/share/zsh
 sudo ln -s $REPO_DIR/config/zsh /root/.config/zsh
 
-step "Cleaning up"
-rm -rf $TMP_DIR $HOME/.bash*
+step "Installing vim plugins"
+nvim -s $REPO_DIR/vimplug
 
 step "XDG user-dirs update"
 xdg-user-dirs-update
@@ -238,5 +238,8 @@ git remote set-url origin git@github.com:vmsynkov/dotfiles
 popd &> /dev/null
 
 [[ "$1" = "vbox" ]] && step "Enabling vboxservice" && sudo systemctl enable vboxservice &> /dev/null
+
+step "Cleaning up"
+rm -rf $TMP_DIR $HOME/.bash*
 
 reboot
