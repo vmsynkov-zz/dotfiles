@@ -20,8 +20,9 @@ npm \
 oblogout \
 openssh \
 python \
-python-neovim-git \
-python2-neovim-git \
+python2 \
+python-neovim \
+python2-neovim \
 rofi \
 termite \
 tmux \
@@ -42,6 +43,8 @@ zip \
 zsh \
 zsh-completions \
 zsh-syntax-highlighting"
+
+[[ "$1" = "vbox" ]] && PACKAGES=$PACKAGES" linux-headers virtualbox-guest-utils"
 
 AURPACKAGES="\
 canto-curses \
@@ -81,22 +84,27 @@ $HOME/load/.tpart"
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 ORANGE="\033[0;33m"
+PINK="\033[0;35m"
 NC="\033[0m"
 
 function ok {
-	printf "[${GREEN}OK${NC}] $1\n"
+  printf "[${GREEN}OK${NC}] $1\n"
 }
 
 function warning {
-	printf "[${ORANGE}WARNING${NC}] $1\n"
+  printf "[${ORANGE}WARNING${NC}] $1\n" | tee -a install.log
 }
 
 function fatal {
-	printf "[${RED}FATAL${NC}] $1\n"
+  printf "[${RED}FATAL${NC}] $1\n"
+}
+
+function step {
+  printf "[${PINK}**${NC}] $1\n"
 }
 
 function aurinstall {
-  pushd $TMP_DIR
+  pushd $TMP_DIR &> /dev/null
 
   curl -s -o "$1".tar.gz https://aur.archlinux.org/cgit/aur.git/snapshot/"$1".tar.gz
 
@@ -106,22 +114,22 @@ function aurinstall {
   else
     tar -xf "$1".tar.gz
 
-    pushd $1
+    pushd $1 &> /dev/null
     makepkg --noconfirm --noprogressbar --needed -sri &> /dev/null
-    popd
+    popd &> /dev/null
 
-    which $2 &> /dev/null && ok "Succesfully installed $1" || fatal "$1 installation failed" && exit 1
-
-    popd
+    which $2 &> /dev/null && ok "Succesfully installed $1" && popd &> /dev/null || {
+      fatal "$1 installation failed" && exit 1
+      }
   fi
 }
 
-printf "Constructing initial environment\n"
+step "Constructing initial environment"
 for dir in $BASE_DIRS; do
-	mkdir -p $dir
+  mkdir -p $dir
 done
 
-printf "Checking packages for existance...\n"
+step "Checking packages for existance..."
 for package in $PACKAGES; do
   if pacman -Si $package &> /dev/null; then
     OK_PACLIST=$OK_PACLIST" $package"
@@ -130,7 +138,7 @@ for package in $PACKAGES; do
   fi
 done
 
-printf "Installing found packages...\n"
+step "Installing found packages..."
 sudo pacman  --noprogressbar --needed --noconfirm -Syu $OK_PACLIST &> /dev/null
 ok "Pacman finished installing packages"
 
@@ -140,78 +148,90 @@ if [[ -n $BAD_PACLIST ]]; then
   done
 fi
 
-aurinstall cower-git cower && aurinstall pacaur pacaur || warning "AUR packages won't be installed\n"
-
-if which pacaur &> /dev/null; then
-  printf "Checking AUR packages for existance...\n"
-  for pac in $AURPACKAGES; do
-    if pacaur -Sai $pac &> /dev/null; then
-      OK_AURLIST=$OK_AURLIST" $pac"
-    else
-      BAD_AURLIST=$BAD_AURLIST" $pac"
-    fi
-  done
-
-  printf "Installing found packages...\n"
-  pacaur --noconfirm --noedit --needed -Sua $OK_AURLIST &> /dev/null
-  ok "Pacaur finished installation"
-
-  if [[ -n $BAD_AURLIST ]]; then
-    for pac in $BAD_AURLIST; do
-      warning "Couldn't find $pac\n"
+aurinstall cower-git cower && { 
+  aurinstall pacaur pacaur && {
+    step "Checking AUR packages for existance..."
+    for pac in $AURPACKAGES; do
+      if pacaur -Sai $pac &> /dev/null; then
+        OK_AURLIST=$OK_AURLIST" $pac"
+      else
+        BAD_AURLIST=$BAD_AURLIST" $pac"
+      fi
     done
-  fi
-fi
 
-printf "Cloning Oh-My-Zsh\n"
+    step "Installing found packages..."
+    pacaur --noconfirm --noedit --needed -Sua $OK_AURLIST &> /dev/null
+    ok "Pacaur finished installation"
+
+    if [[ -n $BAD_AURLIST ]]; then
+      for pac in $BAD_AURLIST; do
+        warning "Couldn't find $pac\n"
+      done
+    fi
+  }
+} || warning "AUR packages won't be installed\n"
+
+step "Cloning Oh-My-Zsh"
 git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh $HOME/.config/oh-my-zsh &> /dev/null && ok "Oh-My-Zsh installed" || warning "Cloning Oh-My-Zsh failed"
 
-printf "Cloning Powerlevel9k\n"
+step "Cloning Powerlevel9k"
 [[ -d $HOME/.config/oh-my-zsh ]] && \
-git clone --depth=1 https://github.com/bhilburn/powerlevel9k $HOME/.config/oh-my-zsh/custom/themes/powerlevel9k || warning "Cloning Powerlevel9k failed"
+git clone --depth=1 https://github.com/bhilburn/powerlevel9k $HOME/.config/oh-my-zsh/custom/themes/powerlevel9k &> /dev/null || warning "Cloning Powerlevel9k failed"
 
-printf "Cloning dotfiles\n"
-git clone https://www.github.com/vmsynkov/dotfiles $HOME/src/dotfiles &> /dev/null || fatal "Cloning dotfiles failed" && exit 1
+step "Cloning dotfiles"
+git clone https://www.github.com/vmsynkov/dotfiles $HOME/src/dotfiles &> /dev/null || { 
+  fatal "Cloning dotfiles failed" && exit 1 
+}
 
-printf "Installing systemd user services and timers\n"
+step "Installing systemd user services and timers"
 for entry in $(ls $REPO_DIR/config/systemd/user); do 
   install -m 0644 -p -t $SYSTEMD_DIR $REPO_DIR/config/systemd/user/$entry
 done
 
-printf "Linking wallpapers\n"
+step "Linking wallpapers"
 ln -s $REPO_DIR/config/wallpapers $CONFIG_DIR/wallpapers
 
-printf "Linking configuration files\n"
-for entry in $(ls $REPO_DIR/config --ignore wallpapers --ignore systemd --ignore nvim); do 
-	if [ -d $REPO_DIR/config/$entry ]; then
-		mkdir -p $CONFIG_DIR/$entry
-		for file in $(ls --almost-all $REPO_DIR/config/$entry); do
+step "Linking configuration files"
+for entry in $(ls $REPO_DIR/config --ignore wallpapers --ignore systemd); do 
+  if [ -d $REPO_DIR/config/$entry ]; then
+    mkdir -p $CONFIG_DIR/$entry
+    for file in $(ls --almost-all $REPO_DIR/config/$entry); do
       ln -s $REPO_DIR/config/$entry/$file $CONFIG_DIR/$entry/$file
-		done
-	else
+    done
+  else
     ln -s $REPO_DIR/config/$entry $CONFIG_DIR/$entry
-	fi
+  fi
 done
 
-printf "Installing patched fonts\n"
+step "Installing patched fonts"
 for font in $(ls $REPO_DIR/fonts); do
-	install -m 0644 -p -t $FONT_DIR $REPO_DIR/fonts/$font
+  install -m 0644 -p -t $FONT_DIR $REPO_DIR/fonts/$font
 done
 
-printf "Linking scripts\n"
+step "Linking scripts"
 ln -s $REPO_DIR/scripts $HOME/src/scripts
 
-printf "Installing /etc and /root specific files"
-install -m 0644 -p -t /etc $REPO_DIR/oblogout.conf
-install -m 0644 -p -t /etc/zsh $REPO_DIR/zshenv
+step "Installing oblogout.conf"
+sudo install -m 0644 -p -t /etc $REPO_DIR/oblogout.conf
+step "Installing zshenv"
+sudo install -m 0644 -p -t /etc/zsh $REPO_DIR/zshenv
+step "Linking zshrc for root"
 sudo mkdir -p /root/.config /root/.local/share/zsh
 sudo ln -s $REPO_DIR/config/zsh /root/.config/zsh
 
-printf "Cleaning up\n"
-rm -rf $TMP_DIR $HOME/.viminfo $HOME/.bash*
+step "Cleaning up"
+rm -rf $TMP_DIR $HOME/.bash*
 
-printf "Some routines\n"
+step "XDG user-dirs update"
 xdg-user-dirs-update
+
+step "Font cache update"
 fc-cache -f $FONT_DIR
-chsh -s /bin/zsh cli3mo
-chsh -s /bin/zsh root
+
+step "Changing shell"
+sudo chsh -s /bin/zsh cli3mo &> /dev/null
+sudo chsh -s /bin/zsh root &> /dev/null
+
+[[ "$1" = "vbox" ]] && step "Enabling vboxservice" && sudo systemctl enable vboxservice &> /dev/null
+
+reboot

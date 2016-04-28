@@ -18,4 +18,8 @@ dunst &
 canto-daemon &
 transmission-daemon &
 
+if [ -f /usr/bin/VBoxClient-all ]; then
+  VBoxClient-all
+fi
+
 exec i3
