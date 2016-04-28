@@ -136,12 +136,6 @@ let g:jsdoc_allow_input_prompt=1
 let g:jsdoc_input_description=1
 let g:jsdoc_additional_descriptions=1
 
-<<<<<<< HEAD
-=======
-let g:ycm_server_python_interpreter = '/usr/bin/python2'
-let g:ycm_python_binary_path = '/usr/bin/python2'
-
->>>>>>> 65ed195aa290bfd098adfb2ba8b79249322d35f6
 "" UltiSnips
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:UltiSnipsExpandTrigger="<leader>r"
@@ -150,7 +144,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir='~/.config/nvim/plugged/vim-snippets/UltiSnips'
 let g:UltiSnipsSnippetsDirectories='~/.config/nvim/plugged/vim-snippets/snippets'
-<<<<<<< HEAD
 
 "" YouCompleteMe
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -161,5 +154,3 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_server_use_vim_stdout = 0
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
-=======
->>>>>>> 65ed195aa290bfd098adfb2ba8b79249322d35f6
