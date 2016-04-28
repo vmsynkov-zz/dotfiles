@@ -1,56 +1,56 @@
 #!/bin/bash
 
 PACKAGES="\
-vifm \
-dunst \
 alsa-utils \
-rofi \
-oblogout \
-compton \
 apvlv \
-openssh \
-xf86-video-intel \
-xf86-video-ati \
-xorg-server \
-xorg-xinit \
-xorg-utils \
-xorg-server-utils \
-feh \
-termite \
-tmux \
-zip \
-unzip \
-zsh \
-zsh-completions \
-zsh-syntax-highlighting \
-transmission-cli \
-transmission-remote-cli \
-mpd \
-ncmpcpp \
-mpv \
-git \
-python \
-xdg-user-dirs \
-expac \
-trojita \
-libnotify \
 chromium \
+cmake \
+compton \
+dunst \
+expac \
+feh \
 gconf \
+git \
+libnotify \
+mpd \
+mpv \
+ncmpcpp \
 nodejs \
 npm \
+oblogout \
+openssh \
+python \
 python-neovim-git \
 python2-neovim-git \
-cmake \
-xorg-xrdb"
+rofi \
+termite \
+tmux \
+transmission-cli \
+transmission-remote-cli \
+trojita \
+unzip \
+vifm \
+xdg-user-dirs \
+xf86-video-ati \
+xf86-video-intel \
+xorg-server \
+xorg-server-utils \
+xorg-utils \
+xorg-xinit \
+xorg-xrdb \
+zip \
+zsh \
+zsh-completions \
+zsh-syntax-highlighting"
 
 AURPACKAGES="\
-i3-gaps-next-git \
-i3blocks-gaps-git \
 canto-curses \
 canto-daemon \
 gtk-theme-arc \
-python-powerline-git \
-numix-circle-icon-theme-git"
+i3-gaps-next-git \
+i3blocks-gaps-git \
+numix-circle-icon-theme-git \
+python-powerline-git"
 
 TMP_DIR=$HOME/tmp
 REPO_DIR=$HOME/src/dotfiles
@@ -72,7 +72,8 @@ $HOME/muse \
 $HOME/.local/.templates \
 $HOME/.local/.public \
 $HOME/.local/share/zsh \
-$HOME/.local/npm \
+$HOME/.local/share/tmux \
+$HOME/.local/share/npm \
 $HOME/load \
 $HOME/load/.tfiles \
 $HOME/load/.tpart"
@@ -163,58 +164,48 @@ if which pacaur &> /dev/null; then
 fi
 
 printf "Cloning Oh-My-Zsh\n"
-[[ -d $HOME/.config/oh-my-zsh ]] && ok "Oh-My-Zsh already installed" || {
-  git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh $HOME/.config/oh-my-zsh &> /dev/null && ok "Oh-My-Zsh installed" || warning "Cloning Oh-My-Zsh failed"
-}
+git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh $HOME/.config/oh-my-zsh &> /dev/null && ok "Oh-My-Zsh installed" || warning "Cloning Oh-My-Zsh failed"
 
 printf "Cloning Powerlevel9k\n"
-[[ -d $HOME/.config/oh-my-zsh ]] && {
-  [[ -d $HOME/.config/oh-my-zsh/custom/themes/powerlevel9k ]] && ok "Powerlevel9k already installed" || 
-	git clone --depth=1 https://github.com/bhilburn/powerlevel9k $HOME/.config/oh-my-zsh/custom/themes/powerlevel9k || warning "Cloning Powerlevel9k failed"
-}
+[[ -d $HOME/.config/oh-my-zsh ]] && \
+git clone --depth=1 https://github.com/bhilburn/powerlevel9k $HOME/.config/oh-my-zsh/custom/themes/powerlevel9k || warning "Cloning Powerlevel9k failed"
 
 printf "Cloning dotfiles\n"
-[[ -d $HOME/src/dotfiles ]] && ok "Dotfiles already cloned" || { 
-  git clone https://www.github.com/vmsynkov/dotfiles $HOME/src/dotfiles &> /dev/null || fatal "Cloning dotfiles failed" && exit 1
-}
-
-printf "Linking XDG_CONFIG_HOME\n"
+git clone https://www.github.com/vmsynkov/dotfiles $HOME/src/dotfiles &> /dev/null || fatal "Cloning dotfiles failed" && exit 1
 
 printf "Installing systemd user services and timers\n"
 for entry in $(ls $REPO_DIR/config/systemd/user); do 
-  [[ ! -a $SYSTEMD_DIR/$entry ]] && install -m 0644 -p -t $SYSTEMD_DIR $REPO_DIR/config/systemd/user/$entry
+  install -m 0644 -p -t $SYSTEMD_DIR $REPO_DIR/config/systemd/user/$entry
 done
 
 printf "Linking wallpapers\n"
-[[ ! -a $CONFIG_DIR/wallpapers ]] && ln -s $REPO_DIR/config/wallpapers $CONFIG_DIR/wallpapers
+ln -s $REPO_DIR/config/wallpapers $CONFIG_DIR/wallpapers
 
 printf "Linking configuration files\n"
-for entry in $(ls $REPO_DIR/config --ignore wallpapers --ignore systemd); do 
+for entry in $(ls $REPO_DIR/config --ignore wallpapers --ignore systemd --ignore nvim); do 
 	if [ -d $REPO_DIR/config/$entry ]; then
 		mkdir -p $CONFIG_DIR/$entry
 		for file in $(ls --almost-all $REPO_DIR/config/$entry); do
-      [[ ! -a $CONFIG_DIR/$entry/$file ]] && ln -s $REPO_DIR/config/$entry/$file $CONFIG_DIR/$entry/$file
+      ln -s $REPO_DIR/config/$entry/$file $CONFIG_DIR/$entry/$file
 		done
 	else
-    [[ ! -a $CONFIG_DIR/$entry ]] && ln -s $REPO_DIR/config/$entry $CONFIG_DIR/$entry
+    ln -s $REPO_DIR/config/$entry $CONFIG_DIR/$entry
 	fi
 done
 
 printf "Installing patched fonts\n"
 for font in $(ls $REPO_DIR/fonts); do
-	[[ ! -a $FONT_DIR/$font ]] && install -m 0644 -p -t $FONT_DIR $REPO_DIR/fonts/$font
+	install -m 0644 -p -t $FONT_DIR $REPO_DIR/fonts/$font
 done
 
 printf "Linking scripts\n"
-[[ ! -a $HOME/src/scripts ]] && ln -s $REPO_DIR/scripts $HOME/src/scripts
+ln -s $REPO_DIR/scripts $HOME/src/scripts
 
 printf "Installing /etc and /root specific files"
 install -m 0644 -p -t /etc $REPO_DIR/oblogout.conf
 install -m 0644 -p -t /etc/zsh $REPO_DIR/zshenv
 sudo mkdir -p /root/.config /root/.local/share/zsh
-[[ ! -a /root/.config/zsh ]] && sudo ln -s $REPO_DIR/config/zsh /root/.config/zsh
-[[ ! -a /root/.config/nvim ]] && sudo ln -s $REPO_DIR/config/nvim /root/.config/nvim
-
+sudo ln -s $REPO_DIR/config/zsh /root/.config/zsh
 
 printf "Cleaning up\n"
 rm -rf $TMP_DIR $HOME/.viminfo $HOME/.bash*
