@@ -13,7 +13,7 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XAUTHORITY=$XDG_CONFIG_HOME/xorg/xauthority
 export SCRIPTS_FOLDER=$HOME/src/scripts
 export GTK2_RC_FILES=$XDG_CONFIG_HOME/gtk-2.0/gtkrc
-export TMUX_TMPDIR=$XDG_RUNTIME_DIR/tmux
+export TMUX_TMPDIR=$XDG_DATA_HOME/tmux
 export npm_config_userconfig=$XDG_CONFIG_HOME/npm/npmrc
 export LESSHISTFILE=/dev/null
 
@@ -26,14 +26,11 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 
 DISABLE_AUTO_UPDATE="true"
 
-HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="false"
 DISABLE_AUTO_TITLE="true"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-alias pacin="sudo pacman -S --needed"
-alias pacinse="sudo pacman -S --asexplicit"
 
 function ns {
   touch $1 && chmod u+x $1 && $EDITOR $1
