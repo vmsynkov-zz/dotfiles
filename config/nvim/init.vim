@@ -12,15 +12,11 @@ Plug 'mattn/emmet-vim'
 Plug 'elzr/vim-json'
 Plug 'heavenshell/vim-jsdoc'
 
-"Plug 'othree/html5.vim'
-"Plug 'othree/html5-syntax.vim'
-"Plug 'ludovicchabant/vim-gutentags'
-
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 Plug 'nathanaelkane/vim-indent-guides'
 
-Plug 'Valloric/YouCompleteMe', { 'do': '/usr/bin/python2 ./install.py --tern-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': '/usr/bin/python2 ./install.py --tern-completer && pkill -INT nvim' }
 
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
