@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/bash
+
+set +o history
 
 PACKAGES="\
 alsa-utils \
@@ -66,6 +68,12 @@ CONFIG_DIR=$HOME/.config
 OHMYZSH_DIR=$HOME/.config/oh-my-zsh
 SYSTEMD_DIR=$HOME/.config/systemd/user
 
+ROOT_DIRS="\
+/root/.config/zsh \
+/root/.config/tmux \
+/root/.local/share/zsh \
+/root/.local/share/tmux"
+
 BASE_DIRS="\
 "$TMP_DIR" \
 "$FONT_DIR" \
@@ -132,6 +140,10 @@ function aurinstall {
 step "Constructing initial environment"
 for dir in $BASE_DIRS; do
   mkdir -p $dir
+done
+
+for dir in $ROOT_DIRS; do
+  sudo mkdir -p $dir
 done
 
 step "Checking packages for existance..."
@@ -220,9 +232,12 @@ step "Installing oblogout.conf"
 sudo install -m 0644 -p -t /etc $REPO_DIR/oblogout.conf
 step "Installing zshenv"
 sudo install -m 0644 -p -t /etc/zsh $REPO_DIR/zshenv
-step "Linking zshrc for root"
-sudo mkdir -p /root/.config /root/.local/share/zsh
-sudo ln -s $REPO_DIR/config/zsh /root/.config/zsh
+step "Installing zshrc for root"
+sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/aliases.zsh
+sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/powerlevel.zsh
+sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/.zshrc
+sudo ln -s $REPO_DIR/config/tmux/tmux.conf /root/.config/tmux/tmux.conf
+sudo patch /root/.config/zsh/.zshrc $REPO_DIR/zshrc.patch
 
 step "Installing vim plugins"
 nvim -s $REPO_DIR/vimplug &> /dev/null 
@@ -242,9 +257,25 @@ pushd $REPO_DIR &> /dev/null
 git remote set-url origin git@github.com:vmsynkov/dotfiles
 popd &> /dev/null
 
+step "Enabling services"
+UNIT_FILES=$(ls ~/.config/systemd/user)
+
+for file in $UNIT_FILES; do
+  echo $file | grep service &> /dev/null && {
+    SERVICE=$(echo $file | grep -E -o '^\w+')
+    echo $UNIT_FILES | grep $SERVICE.timer &> /dev/null && \
+    systemctl --user enable $SERVICE.timer &> /dev/null || \
+    systemctl --user enable $file &> /dev/null
+  }
+done
+
+systemctl --user enable mpd.service
+systemctl --user enable transmission.service
+
 [[ "$1" = "vbox" ]] && step "Enabling vboxservice" && sudo systemctl enable vboxservice &> /dev/null
 
 step "Cleaning up"
 rm -rf $TMP_DIR $HOME/.bash*
+sudo rm -rf /root/.bash*
 
 reboot
