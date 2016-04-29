@@ -225,7 +225,7 @@ sudo mkdir -p /root/.config /root/.local/share/zsh
 sudo ln -s $REPO_DIR/config/zsh /root/.config/zsh
 
 step "Installing vim plugins"
-echo ":PlugInstall" | nvim -s ~ &> /dev/null
+nvim -s $REPO_DIR/vimplug &> /dev/null 
 
 step "XDG user-dirs update"
 xdg-user-dirs-update
