@@ -5,7 +5,6 @@
 set $default_gaps_inner 5
 set $default_gaps_outer 5
 
-set $SCRIPTS $HOME/src/scripts
 set $WALL $HOME/.config/wallpapers
 set $PAPER \
 stone.jpg
@@ -51,7 +50,7 @@ exec --no-startup-id compton -b
 exec_always --no-startup-id feh --no-fehbg --bg-fill $WALL/$PAPER
 
 # bindings
-bindcode $mod+33 exec --no-startup-id $SCRIPTS/layout_change.sh && pkill -RTMIN+4 i3blocks
+bindcode $mod+33 exec --no-startup-id $SCRIPTS_FOLDER/layout_change.sh && pkill -RTMIN+4 i3blocks
 bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
 bindcode $mod+40 exec --no-startup-id rofi -show run -auto-select
 bindsym $mod+backslash exec --no-startup-id oblogout 
@@ -62,9 +61,12 @@ bindcode $mod+58 move scratchpad
 bindcode $mod+57 scratchpad show, resize set 1880 1025, move position 20 40
 
 
-bindsym XF86AudioLowerVolume exec --no-startup-id $SCRIPTS/volume_control.sh lower
-bindsym XF86AudioRaiseVolume exec --no-startup-id $SCRIPTS/volume_control.sh increase
-bindsym XF86AudioMute exec --no-startup-id $SCRIPTS/volume_control.sh toggle
+bindsym XF86AudioLowerVolume exec --no-startup-id $SCRIPTS_FOLDER/volume_control.sh lower
+bindsym XF86AudioRaiseVolume exec --no-startup-id $SCRIPTS_FOLDER/volume_control.sh increase
+bindsym XF86AudioMute exec --no-startup-id $SCRIPTS_FOLDER/volume_control.sh toggle
+bindsym Print exec --no-startup-id maim $HOME/pic/screen/$(date +%F-%T).png
+bindsym Delete exec --no-startup-id maim -i $(xdotool getactivewindow) $HOME/pic/screen/$(date +%F-%T).png
+bindsym Insert exec --no-startup-id maim -s $HOME/pic/screen/$(date +%F-%T).png
 
 bindcode $mod+43 focus left
 bindcode $mod+44 focus down
@@ -126,7 +128,7 @@ mode --pango_markup "$mode_resize" {
     bindcode 45 resize grow height 10 px or 1 ppt
     bindcode 44 resize shrink height 10 px or 1 ppt
 
-    bindcode 39 mode "default", exec --no-startup-id $SCRIPTS/slopsize.sh
+    bindcode 39 mode "default", exec --no-startup-id $SCRIPTS_FOLDER/slopsize.sh
 
     bindsym Return mode "default"
     bindsym Escape mode "default"

@@ -12,6 +12,7 @@ feh \
 gconf \
 git \
 libnotify \
+maim \
 mpd \
 mpv \
 ncmpcpp \
@@ -20,10 +21,11 @@ npm \
 oblogout \
 openssh \
 python \
-python2 \
 python-neovim \
+python2 \
 python2-neovim \
 rofi \
+slop \
 termite \
 tmux \
 transmission-cli \
@@ -32,6 +34,7 @@ trojita \
 unzip \
 vifm \
 xdg-user-dirs \
+xdotool \
 xf86-video-ati \
 xf86-video-intel \
 xorg-server \
@@ -39,6 +42,7 @@ xorg-server-utils \
 xorg-utils \
 xorg-xinit \
 xorg-xrdb \
+xsel \
 zip \
 zsh \
 zsh-completions \
@@ -70,6 +74,7 @@ BASE_DIRS="\
 $HOME/doc \
 $HOME/vid \
 $HOME/pic \
+$HOME/pic/screen \
 $HOME/desk \
 $HOME/muse \
 $HOME/.local/.templates \
@@ -220,7 +225,7 @@ sudo mkdir -p /root/.config /root/.local/share/zsh
 sudo ln -s $REPO_DIR/config/zsh /root/.config/zsh
 
 step "Installing vim plugins"
-nvim -s $REPO_DIR/vimplug &> /dev/null
+echo ":PlugInstall" | nvim -s ~ &> /dev/null
 
 step "XDG user-dirs update"
 xdg-user-dirs-update

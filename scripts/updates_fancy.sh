@@ -11,7 +11,7 @@ if [ "$BLOCK_BUTTON" = "1" ]; then
 
 	if [ -n "$ANSWER" ]; then
 
-		PASSWORD=$(rofi -dmenu -lines 1 -p "password: ")
+		PASSWORD=$(rofi -dmenu -password -p "password: ")
 
 		echo $PASSWORD | sudo -S pacman -Syu --noconfirm &> /dev/null &&\
 		notify-send "Pacman" "Updates installed" -i /usr/share/icons/Adwaita/48x48/emotes/face-devilish.png
