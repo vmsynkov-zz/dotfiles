@@ -16,7 +16,7 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 Plug 'nathanaelkane/vim-indent-guides'
 
-Plug 'Valloric/YouCompleteMe', { 'do': '/usr/bin/python2 ./install.py --tern-completer && pkill -INT nvim' }
+Plug 'Valloric/YouCompleteMe', { 'do': '/usr/bin/python2 ./install.py --clang-completer --tern-completer && pkill -INT nvim' }
 
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 

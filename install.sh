@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+rm -f $HOME/.bash*
+sudo rm -f /root/.bash*
 set +o history
 
 PACKAGES="\
@@ -101,7 +103,7 @@ PINK="\033[0;35m"
 NC="\033[0m"
 
 function ok {
-  printf "[${GREEN}OK${NC}] $1\n"
+  printf "[${GREEN}OK${NC}] $1\n" | tee -a install.log
 }
 
 function warning {
@@ -109,11 +111,11 @@ function warning {
 }
 
 function fatal {
-  printf "[${RED}FATAL${NC}] $1\n"
+  printf "[${RED}FATAL${NC}] $1\n" | tee -a install.log
 }
 
 function step {
-  printf "[${PINK}**${NC}] $1\n"
+  printf "[${PINK}**${NC}] $1\n" | tee -a install.log
 }
 
 function aurinstall {
@@ -240,7 +242,8 @@ sudo ln -s $REPO_DIR/config/tmux/tmux.conf /root/.config/tmux/tmux.conf
 sudo patch /root/.config/zsh/.zshrc $REPO_DIR/zshrc.patch
 
 step "Installing vim plugins"
-nvim -s $REPO_DIR/vimplug &> /dev/null 
+export npm_config_userconfig=$HOME/.config/npm/npmrc
+nvim -s --headless $REPO_DIR/vimplug &> $HOME/vimplug.log 
 
 step "XDG user-dirs update"
 xdg-user-dirs-update
@@ -269,13 +272,12 @@ for file in $UNIT_FILES; do
   }
 done
 
-systemctl --user enable mpd.service
-systemctl --user enable transmission.service
+systemctl --user enable mpd.service &> /dev/null
+systemctl --user enable transmission.service &> /dev/null
 
 [[ "$1" = "vbox" ]] && step "Enabling vboxservice" && sudo systemctl enable vboxservice &> /dev/null
 
-step "Cleaning up"
-rm -rf $TMP_DIR $HOME/.bash*
-sudo rm -rf /root/.bash*
+step "Removing tmp dir"
+rm -rf $TMP_DIR 
 
 reboot
