@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-rm -f $HOME/.bash*
-sudo rm -f /root/.bash*
+rm -f $HOME/.bash* $HOME/.bash_history
+sudo rm -f /root/.bash* /root/.bash_history
 set +o history
 
 PACKAGES="\
@@ -70,31 +70,29 @@ CONFIG_DIR=$HOME/.config
 OHMYZSH_DIR=$HOME/.config/oh-my-zsh
 SYSTEMD_DIR=$HOME/.config/systemd/user
 
-ROOT_DIRS="\
-/root/.config/zsh \
-/root/.config/tmux \
-/root/.local/share/zsh \
-/root/.local/share/tmux"
+SHARED_DIRS="\
+.config/tmux \
+.config/zsh \
+.local/.public \
+.local/.templates \
+.local/share/tmux \
+.local/share/zsh \
+desk \
+doc \
+load \
+muse \
+pic \
+vid"
 
 BASE_DIRS="\
-"$TMP_DIR" \
-"$FONT_DIR" \
 "$CONFIG_DIR" \
+"$FONT_DIR" \
 "$SYSTEMD_DIR" \
-$HOME/doc \
-$HOME/vid \
-$HOME/pic \
-$HOME/pic/screen \
-$HOME/desk \
-$HOME/muse \
-$HOME/.local/.templates \
-$HOME/.local/.public \
-$HOME/.local/share/zsh \
-$HOME/.local/share/tmux \
+"$TMP_DIR" \
 $HOME/.local/share/npm \
-$HOME/load \
 $HOME/load/.tfiles \
-$HOME/load/.tpart"
+$HOME/load/.tpart \
+$HOME/pic/screen "
 
 RED="\033[0;31m"
 GREEN="\033[0;32m"
@@ -144,8 +142,9 @@ for dir in $BASE_DIRS; do
   mkdir -p $dir
 done
 
-for dir in $ROOT_DIRS; do
-  sudo mkdir -p $dir
+for dir in $SHARED_DIRS; do
+  mkdir -p $HOME/$dir
+  sudo mkdir -p /root/$dir
 done
 
 step "Checking packages for existance..."
@@ -238,12 +237,13 @@ step "Installing zshrc for root"
 sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/aliases.zsh
 sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/powerlevel.zsh
 sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/.zshrc
+sudo install -o root -t /root/.config $REPO_DIR/config/user-dirs.dirs
 sudo ln -s $REPO_DIR/config/tmux/tmux.conf /root/.config/tmux/tmux.conf
 sudo patch /root/.config/zsh/.zshrc $REPO_DIR/zshrc.patch
 
 step "Installing vim plugins"
 export npm_config_userconfig=$HOME/.config/npm/npmrc
-nvim -s --headless $REPO_DIR/vimplug &> $HOME/vimplug.log 
+nvim -s $REPO_DIR/vimplug &> /dev/null
 
 step "XDG user-dirs update"
 xdg-user-dirs-update
