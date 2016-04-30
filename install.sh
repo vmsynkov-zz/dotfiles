@@ -101,7 +101,7 @@ PINK="\033[0;35m"
 NC="\033[0m"
 
 function ok {
-  printf "[${GREEN}OK${NC}] $1\n" | tee -a install.log
+  printf " [${GREEN}OK${NC}]\n" | tee -a install.log
 }
 
 function warning {
@@ -137,7 +137,7 @@ function aurinstall {
   fi
 }
 
-step "Constructing initial environment"
+step "Constructing initial environment..."
 for dir in $BASE_DIRS; do
   mkdir -p $dir
 done
@@ -146,6 +146,7 @@ for dir in $SHARED_DIRS; do
   mkdir -p $HOME/$dir
   sudo mkdir -p /root/$dir
 done
+ok
 
 step "Checking packages for existance..."
 for package in $PACKAGES; do
@@ -156,15 +157,17 @@ for package in $PACKAGES; do
   fi
 done
 
-step "Installing found packages..."
-sudo pacman  --noprogressbar --needed --noconfirm -Syu $OK_PACLIST &> /dev/null
-ok "Pacman finished installing packages"
+[[ -z "$BAD_PACLIST" ]] && ok
 
 if [[ -n $BAD_PACLIST ]]; then
   for package in $BAD_PACLIST; do
     warning "Couldn't find $package\n"
   done
 fi
+
+step "Installing found packages..."
+sudo pacman  --noprogressbar --needed --noconfirm -Syu $OK_PACLIST &> /dev/null
+ok
 
 aurinstall cower-git cower && { 
   aurinstall pacaur pacaur && {
@@ -177,33 +180,36 @@ aurinstall cower-git cower && {
       fi
     done
 
-    step "Installing found packages..."
-    pacaur --noconfirm --noedit --needed -Sua $OK_AURLIST &> /dev/null
-    ok "Pacaur finished installation"
+    [[ -z "$BAD_AURLIST" ]] && ok
 
     if [[ -n $BAD_AURLIST ]]; then
       for pac in $BAD_AURLIST; do
         warning "Couldn't find $pac\n"
       done
     fi
+
+    step "Installing found packages..."
+    pacaur --noconfirm --noedit --needed -Sua $OK_AURLIST &> /dev/null
+    ok
+
   }
 } || warning "AUR packages won't be installed\n"
 
 step "Cloning Oh-My-Zsh"
-git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh $HOME/.config/oh-my-zsh &> /dev/null && ok "Oh-My-Zsh installed" || warning "Cloning Oh-My-Zsh failed"
+git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh $HOME/.config/oh-my-zsh &> /dev/null && ok || warning "Cloning Oh-My-Zsh failed"
 
 step "Cloning Powerlevel9k"
 [[ -d $HOME/.config/oh-my-zsh ]] && \
-git clone --depth=1 https://github.com/bhilburn/powerlevel9k $HOME/.config/oh-my-zsh/custom/themes/powerlevel9k &> /dev/null || warning "Cloning Powerlevel9k failed"
+git clone --depth=1 https://github.com/bhilburn/powerlevel9k $HOME/.config/oh-my-zsh/custom/themes/powerlevel9k &> /dev/null && ok || warning "Cloning Powerlevel9k failed"
 
 step "Cloning dotfiles"
-git clone https://www.github.com/vmsynkov/dotfiles $HOME/src/dotfiles &> /dev/null || { 
+git clone https://www.github.com/vmsynkov/dotfiles $HOME/src/dotfiles &> /dev/null && ok || { 
   fatal "Cloning dotfiles failed" && exit 1 
 }
 
 ## TEMPORARY
 pushd $REPO_DIR &> /dev/null
-git checkout install
+git checkout install &> /dev/null
 popd &> /dev/null
 ##
 
@@ -211,9 +217,11 @@ step "Installing systemd user services and timers"
 for entry in $(ls $REPO_DIR/config/systemd/user); do 
   install -m 0644 -p -t $SYSTEMD_DIR $REPO_DIR/config/systemd/user/$entry
 done
+ok
 
 step "Linking wallpapers"
 ln -s $REPO_DIR/config/wallpapers $CONFIG_DIR/wallpapers
+ok
 
 step "Linking configuration files"
 for entry in $(ls $REPO_DIR/config --ignore wallpapers --ignore systemd); do 
@@ -226,20 +234,26 @@ for entry in $(ls $REPO_DIR/config --ignore wallpapers --ignore systemd); do
     ln -s $REPO_DIR/config/$entry $CONFIG_DIR/$entry
   fi
 done
+ok
 
 step "Installing patched fonts"
 for font in $(ls $REPO_DIR/fonts); do
   install -m 0644 -p -t $FONT_DIR $REPO_DIR/fonts/$font
 done
+ok
 
 step "Linking scripts"
 ln -s $REPO_DIR/scripts $HOME/src/scripts
+ok
 
 step "Installing oblogout.conf"
 sudo install -m 0644 -p -t /etc $REPO_DIR/oblogout.conf
+ok
 step "Installing zshenv"
+ok
 sudo install -m 0644 -p -t /etc/zsh $REPO_DIR/zshenv
 step "Installing zshrc for root"
+ok
 sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/aliases.zsh
 sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/powerlevel.zsh
 sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/.zshrc
@@ -250,21 +264,26 @@ sudo patch /root/.config/zsh/.zshrc $REPO_DIR/zshrc.patch &> /dev/null
 step "Installing vim plugins"
 export npm_config_userconfig=$HOME/.config/npm/npmrc
 nvim -s $REPO_DIR/vimplug &> /dev/null
+ok
 
 step "XDG user-dirs update"
 xdg-user-dirs-update
+ok
 
 step "Font cache update"
 fc-cache -f $FONT_DIR
+ok
 
 step "Changing shell"
 sudo chsh -s /bin/zsh cli3mo &> /dev/null
 sudo chsh -s /bin/zsh root &> /dev/null
+ok
 
 step "Changing dotfiles remote to ssh"
 pushd $REPO_DIR &> /dev/null
 git remote set-url origin git@github.com:vmsynkov/dotfiles
 popd &> /dev/null
+ok
 
 step "Enabling services"
 UNIT_FILES=$(ls ~/.config/systemd/user)
@@ -280,10 +299,11 @@ done
 
 systemctl --user enable mpd.service &> /dev/null
 systemctl --user enable transmission.service &> /dev/null
+ok
 
-[[ "$1" = "vbox" ]] && step "Enabling vboxservice" && sudo systemctl enable vboxservice &> /dev/null
+[[ "$1" = "vbox" ]] && step "Enabling vboxservice" && sudo systemctl enable vboxservice &> /dev/null && ok
 
 step "Removing tmp dir"
-rm -rf $TMP_DIR 
+rm -rf $TMP_DIR && ok
 
 reboot
