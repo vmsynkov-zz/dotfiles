@@ -201,6 +201,12 @@ git clone https://www.github.com/vmsynkov/dotfiles $HOME/src/dotfiles &> /dev/nu
   fatal "Cloning dotfiles failed" && exit 1 
 }
 
+## TEMPORARY
+pushd $REPO_DIR &> /dev/null
+git checkout install
+popd &> /dev/null
+##
+
 step "Installing systemd user services and timers"
 for entry in $(ls $REPO_DIR/config/systemd/user); do 
   install -m 0644 -p -t $SYSTEMD_DIR $REPO_DIR/config/systemd/user/$entry
@@ -239,7 +245,7 @@ sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/powerlevel.zsh
 sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/.zshrc
 sudo install -o root -t /root/.config $REPO_DIR/config/user-dirs.dirs
 sudo ln -s $REPO_DIR/config/tmux/tmux.conf /root/.config/tmux/tmux.conf
-sudo patch /root/.config/zsh/.zshrc $REPO_DIR/zshrc.patch
+sudo patch /root/.config/zsh/.zshrc $REPO_DIR/zshrc.patch &> /dev/null
 
 step "Installing vim plugins"
 export npm_config_userconfig=$HOME/.config/npm/npmrc
