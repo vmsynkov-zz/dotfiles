@@ -168,6 +168,7 @@ new_window none
 for_window [class="^.*"] border pixel 0
 
 for_window [title="mpsyt"] floating enable
+for_window [class="test"] floating enable
 
 assign [class="Firefox"] $ws2
 assign [class="(?i)chrome"] $ws5

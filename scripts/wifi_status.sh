@@ -1,6 +1,6 @@
 #!/bin/bash
 
-QUALITY=$(grep wlp2s0 INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+QUALITY=$(grep wlp2s0 /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
 
 if [[ $QUALITY -ge 80 ]]; then
     echo " TOP"

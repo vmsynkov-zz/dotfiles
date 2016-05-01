@@ -1,23 +1,24 @@
-" execute pathogen#infect()
+call plug#begin('~/.config/nvim/plugged')
 
-"set backspace=indent,eol,start
-syntax on
-" filetype plugin indent on
+"Plug 'junegunn/vim-easy-align'
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+Plug 'morhetz/gruvbox'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+
+call plug#end()
+
+colorscheme gruvbox
 set number
-set hidden
-" set nocompatible
-set showtabline=2
-set noshowmode
-set t_Co=256
-" set laststatus=2
+"set hidden
+"set showtabline=2
+"set noshowmode
+"set laststatus=2
 
-" let g:powerline_pycmd='py3'
-" set rtp+=$HOME/.local/lib/python3.5/site-packages/powerline/bindings/vim/
-"
-" set shell=bash\ -i
-" let g:gruvbox_italic=1
-" let g:gruvbox_contrast_dark='hard'
-" colorscheme gruvbox
-" set background=dark
-"
-" map <C-n> :NERDTreeToggle<CR>
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark='hard'
+set background=dark
+
+let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_server_python_interpreter = '/usr/bin/python3'
