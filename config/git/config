@@ -3,3 +3,5 @@
 	email = vmsynkov@gmail.com
 [core]
 	editor = nvim
+[github]
+	user = vmsynkov

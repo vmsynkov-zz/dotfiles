@@ -2,6 +2,15 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'morhetz/gruvbox'
 
+Plug 'KabbAmine/zeavim.vim'
+
+Plug 'suan/vim-instant-markdown'
+Plug 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
+
+Plug 'editorconfig/editorconfig-vim'
+Plug 'maksimr/vim-jsbeautify'
+
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'othree/yajs.vim'
 Plug 'othree/es.next.syntax.vim'
@@ -16,7 +25,7 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 Plug 'nathanaelkane/vim-indent-guides'
 
-Plug 'Valloric/YouCompleteMe', { 'do': '/usr/bin/python2 ./install.py --clang-completer --tern-completer && pkill -INT nvim' }
+Plug 'Valloric/YouCompleteMe', { 'do': '/usr/bin/python2 ./install.py --tern-completer && pkill -INT nvim' }
 
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
@@ -91,13 +100,6 @@ nmap ga <Plug>(EasyAlign)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <leader>n :NERDTreeToggle<CR>
 
-" Autostart NERDTree if opened without arguments
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Close vim automatically if NERDTree is the only tab opened
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 
@@ -124,7 +126,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs=1
-"let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['eslint']
 
 "" JsDoc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -151,4 +153,17 @@ let g:ycm_server_use_vim_stdout = 0
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 
+"" TernJs
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tern_map_keys=1
+
+"" EditorConfig
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+"" InstantMarkdown
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:instant_markdown_autostart = 0
+
+let g:gist_clip_command = 'xclip -selection clipboard'
+let g:gist_detect_filetype = 1
