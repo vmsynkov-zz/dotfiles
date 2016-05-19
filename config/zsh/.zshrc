@@ -9,8 +9,7 @@ export ARCHFLAGS="-arch x86_64"
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
 export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CACHE_HOME=$HOME/.cache export XDG_DATA_HOME=$HOME/.local/share
 
 export XAUTHORITY=$XDG_CONFIG_HOME/xorg/xauthority
 export SCRIPTS_FOLDER=$HOME/src/scripts
@@ -23,8 +22,7 @@ plugins=(sudo archlinux extract)
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
-#setopt appendhistory autocd beep extendedglob nomatch notify
-#setopt noautopushd chasedots chaselinks pushdtohome pushdsilent beep
+setopt pushdignoredups autocd noautopushd appendhistory
 
 DISABLE_AUTO_UPDATE="true"
 
@@ -34,11 +32,8 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-function ns {
-  touch $1 && chmod u+x $1 && $EDITOR $1
-}
-
 source $XDG_CONFIG_HOME/zsh/aliases.zsh
+source $XDG_CONFIG_HOME/zsh/functions.zsh
 source $XDG_CONFIG_HOME/zsh/powerlevel.zsh
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

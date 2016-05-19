@@ -21,7 +21,8 @@ Plug 'mattn/emmet-vim'
 Plug 'elzr/vim-json'
 Plug 'heavenshell/vim-jsdoc'
 
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips', { 'on': 'NERDTreeToggle' }
+Plug 'honza/vim-snippets', { 'on': 'NERDTreeToggle' }
 
 Plug 'nathanaelkane/vim-indent-guides'
 
