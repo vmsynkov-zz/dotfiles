@@ -28,7 +28,7 @@ alias pacin="sudo pacman -S --needed --noconfirm"
 alias pacinse="sudo pacman -S  --asexplicit --needed --noconfirm"
 alias xpac='expac -H M "%011m\t%-20n\t%10d" $(comm -23 <(pacman -Qqen | sort) <(pacman -Qqg base base-devel | sort)) | sort -n'
 alias cu='checkupdates'
-alias pacupg='sudo pacman -Syu --noconfigm  && pkill -RTMIN+2 i3blocks'
+alias pacupg='sudo pacman -Syu --noconfirm  && pkill -RTMIN+2 i3blocks'
 
 # ls
 alias lsl='ls --almost-all'
