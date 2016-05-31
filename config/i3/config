@@ -7,7 +7,7 @@ set $default_gaps_outer 5
 
 set $WALL $HOME/.config/wallpapers
 set $PAPER \
-stone.jpg
+girl.jpg
 
 set $mod Mod4
 
@@ -160,7 +160,6 @@ focus_on_window_activation urgent
 
 floating_maximum_size 1880 x 1025
 floating_minimum_size -1 x -1
-#floating_maximum_size -1 x -1
 
 new_window none
 
@@ -175,6 +174,8 @@ for_window [class="Oblogout"] fullscreen toggle
 for_window [class="(?i)mpv"] floating enable
 for_window [class="(?i)feh"] floating enable
 for_window [class="(?i)zeal"] floating enable
+
+# trojita
 for_window [class="(?i)trojita"] floating enable, resize set 1880 1025
 for_window [title="Authentication Required"] resize set 500 110
 

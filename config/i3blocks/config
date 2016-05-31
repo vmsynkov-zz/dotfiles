@@ -13,7 +13,7 @@ signal=2
 border=#cc241d
 
 [canto]
-command=echo "    $(canto-remote status || "0") "
+command=echo "    $(canto-remote status 2> /dev/null ) "
 interval=once
 signal=3
 border=#ec5e00

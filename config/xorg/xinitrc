@@ -15,7 +15,6 @@ setxkbmap -option ctrl:swap_lalt_lctl
 xmodmap -e "keycode 135 = Super_L"
 
 dunst &
-canto-daemon &
 transmission-daemon &
 
 if [ -f /usr/bin/VBoxClient-all ]; then
