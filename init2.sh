@@ -23,7 +23,7 @@ useradd -m -g 1993 -u 1304 cli3mo
 echo "root:j" | chpasswd
 echo "cli3mo:j" | chpasswd
 
-curl https://raw.githubusercontent.com/vmsynkov/dotfiles/master/install.sh > /home/cli3mo/install.sh
+curl https://raw.githubusercontent.com/vmsynkov/dotfiles/install/install.sh > /home/cli3mo/install.sh
 chmod +x /home/cli3mo/install.sh
 
 /home/cli3mo/install.sh vbox
