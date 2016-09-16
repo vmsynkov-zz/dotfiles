@@ -1,9 +1,5 @@
 #!/usr/bin/bash
 
-rm -f $HOME/.bash* $HOME/.bash_history
-sudo rm -f /root/.bash* /root/.bash_history
-set +o history
-
 PACKAGES="\
 alsa-utils \
 apvlv \
@@ -52,16 +48,15 @@ zsh \
 zsh-completions \
 zsh-syntax-highlighting"
 
-[[ "$1" = "vbox" ]] && PACKAGES=$PACKAGES" linux-headers virtualbox-guest-utils"
-
 AURPACKAGES="\
-canto-curses \
-canto-daemon \
+zeal-git \
 gtk-theme-arc \
 i3-gaps-next-git \
 i3blocks-gaps-git \
 numix-circle-icon-theme-git \
 python-powerline-git"
+
+[[ "$1" = "vbox" ]] && PACKAGES=$PACKAGES" linux-headers virtualbox-guest-utils"
 
 TMP_DIR=$HOME/tmp
 REPO_DIR=$HOME/src/dotfiles
@@ -92,6 +87,7 @@ BASE_DIRS="\
 $HOME/.local/share/npm \
 $HOME/load/.tfiles \
 $HOME/load/.tpart \
+$HOME/.config/mpd/playlists \
 $HOME/pic/screen "
 
 RED="\033[0;31m"
@@ -101,7 +97,7 @@ PINK="\033[0;35m"
 NC="\033[0m"
 
 function ok {
-  printf " [${GREEN}OK${NC}]\n" | tee -a install.log
+  printf "[${GREEN}OK${NC}]\n" | tee -a install.log
 }
 
 function warning {
@@ -113,7 +109,7 @@ function fatal {
 }
 
 function step {
-  printf "[${PINK}**${NC}] $1\n" | tee -a install.log
+  printf "[${PINK}**${NC}] $1" | tee -a install.log
 }
 
 function aurinstall {
@@ -249,9 +245,11 @@ ok
 step "Installing oblogout.conf"
 sudo install -m 0644 -p -t /etc $REPO_DIR/oblogout.conf
 ok
+
 step "Installing zshenv"
 ok
 sudo install -m 0644 -p -t /etc/zsh $REPO_DIR/zshenv
+
 step "Installing zshrc for root"
 ok
 sudo install -o root -t /root/.config/zsh $REPO_DIR/config/zsh/aliases.zsh
@@ -275,7 +273,7 @@ fc-cache -f $FONT_DIR
 ok
 
 step "Changing shell"
-sudo chsh -s /bin/zsh cli3mo &> /dev/null
+sudo chsh -s /bin/zsh cliemo &> /dev/null
 sudo chsh -s /bin/zsh root &> /dev/null
 ok
 

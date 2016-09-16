@@ -7,7 +7,7 @@ set $default_gaps_outer 5
 
 set $WALL $HOME/.config/wallpapers
 set $PAPER \
-stone.jpg
+girl.jpg
 
 set $mod Mod4
 
@@ -52,7 +52,7 @@ exec_always --no-startup-id feh --no-fehbg --bg-fill $WALL/$PAPER
 # bindings
 bindcode $mod+33 exec --no-startup-id $SCRIPTS_FOLDER/layout_change.sh && pkill -RTMIN+4 i3blocks
 bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
-bindcode $mod+40 exec --no-startup-id rofi -show run -auto-select
+bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu' 
 bindsym $mod+backslash exec --no-startup-id oblogout 
 
 bindcode $mod+27 mode "$mode_resize"
@@ -60,10 +60,10 @@ bindcode $mod+27 mode "$mode_resize"
 bindcode $mod+58 move scratchpad
 bindcode $mod+57 scratchpad show, resize set 1880 1025, move position 20 40
 
-
 bindsym XF86AudioLowerVolume exec --no-startup-id $SCRIPTS_FOLDER/volume_control.sh lower
 bindsym XF86AudioRaiseVolume exec --no-startup-id $SCRIPTS_FOLDER/volume_control.sh increase
 bindsym XF86AudioMute exec --no-startup-id $SCRIPTS_FOLDER/volume_control.sh toggle
+
 bindsym Print exec --no-startup-id maim $HOME/pic/screen/$(date +%F-%T).png
 bindsym Delete exec --no-startup-id maim -i $(xdotool getactivewindow) $HOME/pic/screen/$(date +%F-%T).png
 bindsym Insert exec --no-startup-id maim -s $HOME/pic/screen/$(date +%F-%T).png
@@ -171,12 +171,22 @@ for_window [class="^.*"] border pixel 0, move position center
 assign [class="Firefox"] $ws2
 assign [class="(?i)chromium"] $ws2
 
+for_window [title="(?i)ncmpcpp"] floating enable
+
+for_window [title="(?i)vifm"] floating enable
+for_window [class="(?i)apvlv"] floating enable
+
 for_window [class="Oblogout"] fullscreen toggle 
 for_window [class="(?i)mpv"] floating enable
 for_window [class="(?i)feh"] floating enable
 for_window [class="(?i)zeal"] floating enable
+
+
 for_window [class="(?i)trojita"] floating enable, resize set 1880 1025
+for_window [window_type="dialog" class="(?i)trojita"] resize set 500 300
 for_window [title="Authentication Required"] resize set 500 110
+
+for_window [class="(?i)translate.google.com"] floating enable, resize set 1880 1025
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="bubble"] floating enable

@@ -12,10 +12,9 @@ interval=once
 signal=2
 border=#cc241d
 
-[canto]
-command=echo "    $(canto-remote status || "0") "
+[something]
+command=echo "     420 "
 interval=once
-signal=3
 border=#ec5e00
 
 [ncmcpp]
