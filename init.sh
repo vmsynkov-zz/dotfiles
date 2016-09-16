@@ -19,3 +19,7 @@ mount /dev/sda3 /mnt/home
 pacstrap -i /mnt base base-devel grub
 
 genfstab -U /mnt > /mnt/etc/fstab
+
+curl https://raw.githubusercontent.com/vmsynkov/dotfiles/install/init2.sh > /mnt/init2.sh && chmod +x init2.sh
+
+arch-chroot /mnt /mnt/init2.sh
