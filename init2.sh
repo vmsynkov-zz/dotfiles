@@ -21,9 +21,12 @@ groupadd -g 1993 skult
 useradd -m -g 1993 -u 1304 cli3mo
 
 echo "root:j" | chpasswd
-echo "cli3mo:j" | chpasswd
+echo "cli3mo:j" | chpasswdzr
 
-curl https://raw.githubusercontent.com/vmsynkov/dotfiles/install/install.sh > /home/cli3mo/install.sh
-chmod +x /home/cli3mo/install.sh
+cp /usr/lib/systemd/system/getty@.service /home/cli3mo/autologin@.service
+ln -s /etc/systemd/system/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
 
-/home/cli3mo/install.sh vbox
+sed -i '/ExecStart/c\ExecStart=-/sbin/agetty -a cli3mo %I 38400' /home/cli3mo/autologin@.service
+
+systemctl daemon-reload
+systemctl start getty@tty1.service
