@@ -23,10 +23,11 @@ useradd -m -g 1993 -u 1304 cli3mo
 echo "root:j" | chpasswd
 echo "cli3mo:j" | chpasswd
 
-cp /usr/lib/systemd/system/getty@.service /home/cli3mo/autologin@.service
-ln -s /home/cli3mo/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
+#cp /usr/lib/systemd/system/getty@.service /home/cli3mo/autologin@.service
+#ln -s /home/cli3mo/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
 
-sed -i '/ExecStart/c\ExecStart=-/sbin/agetty --noclear -a cli3mo %I $TERM' /home/cli3mo/autologin@.service
+#sed -i '/ExecStart/c\ExecStart=-/sbin/agetty --noclear -a cli3mo %I $TERM' /home/cli3mo/autologin@.service
+sed -i '/ExecStart/c\ExecStart=-/sbin/agetty --noclear -a cli3mo %I $TERM' /lib/systemd/system/getty@.service
 
 systemctl daemon-reload
 systemctl start getty@tty1.service
