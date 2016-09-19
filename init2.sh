@@ -31,5 +31,9 @@ echo "cli3mo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 #sed -i '/ExecStart/c\ExecStart=-/sbin/agetty --noclear -a cli3mo %I $TERM' /home/cli3mo/autologin@.service
 sed -i '/ExecStart/c\ExecStart=-/sbin/agetty --noclear -a cli3mo %I $TERM' /lib/systemd/system/getty@.service
 
+curl https://raw.githubusercontent.com/vmsynkov/dotfiles/install/install.sh > /home/cli3mo/install.sh && chmod +x /home/cli3mo/install.sh
+
+echo "~/install.sh vbox" >> /home/cli3mo/.bashrc
+
 systemctl daemon-reload
 systemctl start getty@tty1.service
