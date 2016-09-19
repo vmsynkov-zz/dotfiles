@@ -273,7 +273,7 @@ fc-cache -f $FONT_DIR
 ok
 
 step "Changing shell"
-sudo chsh -s /bin/zsh cliemo &> /dev/null
+sudo chsh -s /bin/zsh cli3mo &> /dev/null
 sudo chsh -s /bin/zsh root &> /dev/null
 ok
 
