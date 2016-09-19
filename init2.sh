@@ -21,7 +21,7 @@ groupadd -g 1993 skult
 useradd -m -g 1993 -u 1304 cli3mo
 
 echo "root:j" | chpasswd
-echo "cli3mo:j" | chpasswdzr
+echo "cli3mo:j" | chpasswd
 
 cp /usr/lib/systemd/system/getty@.service /home/cli3mo/autologin@.service
 ln -s /etc/systemd/system/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
