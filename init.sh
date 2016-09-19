@@ -16,7 +16,7 @@ mkdir -p /mnt/home /mnt/boot
 mount /dev/sda1 /mnt/boot
 mount /dev/sda3 /mnt/home
 
-pacstrap --noconfirm -i /mnt base base-devel grub
+pacstrap /mnt base base-devel grub
 
 genfstab -U /mnt > /mnt/etc/fstab
 
